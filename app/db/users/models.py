@@ -43,6 +43,6 @@ class User(Base):
         expire = datetime.now(timezone.utc) + timedelta(expires_delta)
         payload = dict(sub=self.username, exp=expire)
         token = jwt.encode(payload=payload, key=settings.secret_key, algorithm=settings.algorithm)
-        return dict(acces_token=token, token_types="Bearer")
+        return dict(access_token=token, token_type="Bearer")
         
     

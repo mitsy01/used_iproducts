@@ -21,7 +21,7 @@ def decode_jwt(token: Annotated[str, Depends(OAuth2PasswordBearer(tokenUrl="/use
     )
     
     try:
-        payload = jwt.decode(token, key=settings.secret_key, algorithm=[settings.algorithm])
+        payload = jwt.decode(token, key=settings.secret_key, algorithms=[settings.algorithm])
         username = payload.get("sub")
         if not username:
             raise credentials_exception

@@ -20,3 +20,5 @@ async def create_db():
 async def get_db():
     async with Session() as session:
         yield session
+        
+

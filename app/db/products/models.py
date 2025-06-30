@@ -11,7 +11,7 @@ class Product(Base):
     name_prod: Mapped[str] = mapped_column(String(200))
     description: Mapped[str] = mapped_column(String(150))
     price: Mapped[float] = mapped_column()
-    count: Mapped[str] = mapped_column(default=0)
+    count: Mapped[str] = mapped_column(String(100))
     
     
 

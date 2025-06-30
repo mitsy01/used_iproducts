@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 class ProductModel(BaseModel):
     name_prod: str
-    descritpion: Optional[str]| None
+    description: Optional[str]| None
     price: float
     count: str
     
@@ -13,7 +13,7 @@ class ProductModel(BaseModel):
 class ProductModelResponse(BaseModel):
     id: str
     name_prod: str
-    descritpion: Optional[str]| None
+    description: Optional[str]| None
     price: float
     count: str
 

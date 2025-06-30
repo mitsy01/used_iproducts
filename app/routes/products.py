@@ -33,6 +33,8 @@ async def update_prod(product_id: str, product_update: ProductModel, db: Annotat
     return update_prod
 
 
-@products_route.delete("/", status_code=status.HTTP_200_OK, response_model=ProductModel)
-async def delete_prod(product: ProductModel, db: Annotated[AsyncSession, Depends(get_db)]):
-    return await db_actions.delete_prod(name_prod=product.name_prod, price=product.price, db=db)
+@products_route.delete("/", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_prod(product_id: str, db: Annotated[AsyncSession, Depends(get_db)]):
+    success = await db_actions.delete_prod(product_id=product_id, db=db)
+    if not success:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Товар не знайдено.")

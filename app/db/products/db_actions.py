@@ -25,25 +25,26 @@ async def add_prod(product: ProductModel, db: AsyncSession):
     return product
 
 
-async def delete_prod(name_prod: str, price: float, db: AsyncSession):
-    query = await db.execute(select(Product).filter_by(name_prod=name_prod, price=price))
-    product = query.scalars().first()
-    if not product:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Такого товару не знайдено.")
+async def delete_prod(product_id: str, db: AsyncSession):
+    query = await db.execute(select(Product).where(Product.id == product_id))
+    product = query.scalar_one_or_none()
+    
+    if product is None:
+        return None
     
     await db.delete(product)
     await db.commit()
-    return product
+    return True
 
 
-async def update_prod(product_id: str, update_data: ProductModelResponse, db: AsyncSession):
+async def update_prod(product_id: str, data: ProductModelResponse, db: AsyncSession):
     query = await db.execute(select(Product).where(Product.id==product_id))
     product = query.scalar_one_or_none()
     
     if product is None:
         return None
     
-    for field, value in update_data.model_dump(exclude_unset=True).items():
+    for field, value in data.model_dump(exclude_unset=True).items():
         setattr(product, field, value)
         
     await db.commit()

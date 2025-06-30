@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from sqlalchemy import String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 from app.db.base import Base
@@ -13,5 +15,9 @@ class Product(Base):
     price: Mapped[float] = mapped_column()
     count: Mapped[str] = mapped_column(String(100))
     
+    
+    def __init__(self, **kwargs):
+        self.id = uuid4().hex
+        super().__init__(**kwargs)
     
 
